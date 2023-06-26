@@ -11,6 +11,6 @@ int _strlen(char *s)
 	int longi;
 
 	for (longi = 0; *s != '\0'; s++)
-		++counter;
+		++longi;
 	return (longi);
 }
