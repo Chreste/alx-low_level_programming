@@ -10,23 +10,21 @@
 
 char *rot13(char *s)
 {
+	int i;
 	int j;
+	char data1[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char datarot[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
-	char Rot13[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	char ROT13[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
-	char *ptr = s;
-
-	while (*s)
+	for (i = 0; s[i] != '\0'; i++)
 	{
-		for (j = 0; j <= 52; j++)
+		for (j = 0; j < 52; j++)
 		{
-			if (*s == Rot13)
+			if (s[i] == data1[j])
 			{
-				*s = ROT13[j];
+				s[i] = datarot[j];
 				break;
 			}
 		}
-		s++;
 	}
-	return (ptr);
+	return (s);
 }
