@@ -10,7 +10,7 @@
 
 int _atoi(char *s)
 {
-	int i, d, n, len, f, digit;
+	int e, p, m, l, v, digit;
 
 	e = 0;
 	p = 0;
@@ -30,9 +30,9 @@ int _atoi(char *s)
 		if (s[e] >= '0' && s[e] <= '9')
 		{
 			digit = s[e] - '0';
-			if (d % 2)
+			if (p % 2)
 				digit = -digit;
-			n = n * 10 + digit;
+			m = m * 10 + digit;
 			v = 1;
 			if (s[e + 1] < '0' || s[e + 1] > '9')
 				break;
@@ -44,7 +44,7 @@ int _atoi(char *s)
 	if (v == 0)
 		return (0);
 
-	return (n);
+	return (m);
 }
 
 /**
@@ -57,7 +57,7 @@ int _atoi(char *s)
 
 int main(int argc, char *argv[])
 {
-	int result, num1, num2;
+	int result, n1, n2;
 
 	if (argc < 3 || argc > 3)
 	{
@@ -65,9 +65,9 @@ int main(int argc, char *argv[])
 		return (1);
 	}
 
-	num1 = _atoi(argv[1]);
-	num2 = _atoi(argv[2]);
-	result = num1 * num2;
+	n1 = _atoi(argv[1]);
+	n2 = _atoi(argv[2]);
+	result = n1 * n2;
 
 	printf("%d\n", result);
 
