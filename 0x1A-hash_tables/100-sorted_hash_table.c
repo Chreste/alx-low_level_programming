@@ -1,4 +1,5 @@
 #include "hash_tables.h"
+
 /**
  * shash_table_create - Creates a sorted hash table.
  * @size: The size of new sorted hash table.
@@ -8,23 +9,23 @@
  */
 shash_table_t *shash_table_create(unsigned long int size)
 {
-	shash_table_t *sht;
+	shash_table_t *ht;
 	unsigned long int x;
 
-	sht = malloc(sizeof(shash_table_t));
-	if (sht == NULL)
+	ht = malloc(sizeof(shash_table_t));
+	if (ht == NULL)
 		return (NULL);
 
-	sht->size = size;
-	sht->array = malloc(sizeof(shash_node_t *) * size);
-	if (sht->array == NULL)
+	ht->size = size;
+	ht->array = malloc(sizeof(shash_node_t *) * size);
+	if (ht->array == NULL)
 		return (NULL);
 	for (x = 0; x < size; x++)
-		sht->array[x] = NULL;
-	sht->shead = NULL;
-	sht->stail = NULL;
+		ht->array[x] = NULL;
+	ht->shead = NULL;
+	ht->stail = NULL;
 
-	return (sht);
+	return (ht);
 }
 
 /**
@@ -38,7 +39,7 @@ shash_table_t *shash_table_create(unsigned long int size)
  */
 int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 {
-	shash_node_t *shn, *tmp;
+	shash_node_t *new, *tmp;
 	char *value_copy;
 	unsigned long int index;
 
@@ -62,49 +63,49 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 		tmp = tmp->snext;
 	}
 
-	shn = malloc(sizeof(shash_node_t));
-	if (shn == NULL)
+	new = malloc(sizeof(shash_node_t));
+	if (new == NULL)
 	{
 		free(value_copy);
 		return (0);
 	}
-	shn->key = strdup(key);
-	if (shn->key == NULL)
+	new->key = strdup(key);
+	if (new->key == NULL)
 	{
 		free(value_copy);
-		free(neshn);
+		free(new);
 		return (0);
 	}
-	shn->value = value_copy;
-	shn->next = ht->array[index];
-	ht->array[index] = shn;
+	new->value = value_copy;
+	new->next = ht->array[index];
+	ht->array[index] = new;
 
 	if (ht->shead == NULL)
 	{
-		shn->sprev = NULL;
-		shn->snext = NULL;
-		ht->shead = shn;
-		ht->stail = shn;
+		new->sprev = NULL;
+		new->snext = NULL;
+		ht->shead = new;
+		ht->stail = new;
 	}
 	else if (strcmp(ht->shead->key, key) > 0)
 	{
-		shn->sprev = NULL;
-		shn->snext = ht->shead;
-		ht->shead->sprev = shn;
-		ht->shead = shn;
+		new->sprev = NULL;
+		new->snext = ht->shead;
+		ht->shead->sprev = new;
+		ht->shead = new;
 	}
 	else
 	{
 		tmp = ht->shead;
 		while (tmp->snext != NULL && strcmp(tmp->snext->key, key) < 0)
 			tmp = tmp->snext;
-		shn->sprev = tmp;
-		shn->snext = tmp->snext;
+		new->sprev = tmp;
+		new->snext = tmp->snext;
 		if (tmp->snext == NULL)
-			ht->stail = shn;
+			ht->stail = new;
 		else
-			tmp->snext->sprev = shn;
-		tmp->snext = shn;
+			tmp->snext->sprev = new;
+		tmp->snext = new;
 	}
 
 	return (1);
